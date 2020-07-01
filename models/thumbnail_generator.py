@@ -22,7 +22,7 @@ def generate_thumbnail(file_path: str) -> str:
         picture_file_type = imghdr.what(file_path)
         if not thumbnail_path.exists() and picture_file_type is not None:
             image = Image.open(file_path)
-            image.thumbnail((128, 128))
+            image.thumbnail((256, 256))
             image.save(thumbnail_path, picture_file_type)
         elif picture_file_type is None:
             return ('/image/file_icon.png')
