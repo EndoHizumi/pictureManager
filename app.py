@@ -39,6 +39,7 @@ def get_thumbnail(file_path):
 
 
 def load_file(file_path):
+    imghdr.tests.append(lambda h, f: 'jpeg' if h[:2] == b'\xff\xd8' else None)
     if not os.path.exists(file_path):
         return None
 

@@ -14,6 +14,7 @@ def generate_thumbnail(file_path: str) -> str:
     return:
         作成したサムネイルのパス
     '''
+    imghdr.tests.append(lambda h, f: 'jpeg' if h[:2] == b'\xff\xd8' else None)
     path = Path(file_path)
 
     if path.is_file():
