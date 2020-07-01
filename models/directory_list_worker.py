@@ -32,7 +32,7 @@ def handle(directory_path):
         }
     '''
     directory_list = get_directory_list(Path(directory_path))
-    data_list = [{'name': item.name, 'thumbnail': generate_thumbnail(str(item)), 'image': f'img/{quote(str(item))}'} for item in directory_list if not str(item.name).startswith('.')]
+    data_list = [{'name': item.name, 'thumbnail': generate_thumbnail(str(item)), 'path': generate_path(item)} for item in directory_list if not str(item.name).startswith('.')]
 
     directory_dict = {
         'directoryPath': directory_path,
@@ -40,6 +40,14 @@ def handle(directory_path):
         'data': data_list
     }
     return directory_dict
+
+
+def generate_path(path: Path):
+    print(f'"{path.absolute()}" is_dir: {path.is_dir()}: is_exists:{path.exists()}')
+    if path.is_dir():
+        return f'view/{quote(str(path))}'
+    else:
+        return f'img/{quote(str(path))}'
 
 
 def get_directory_list(directory_path: Path):
