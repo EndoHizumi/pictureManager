@@ -1,6 +1,8 @@
 from pathlib import Path
 from models.thumbnail_generator import generate_thumbnail
 from urllib.parse import quote
+import glob
+import os
 
 def handle(directory_path):
     '''
@@ -32,8 +34,7 @@ def handle(directory_path):
         }
     '''
     directory_list = get_directory_list(Path(directory_path))
-    data_list = [{'name': item.name, 'thumbnail': generate_thumbnail(str(item)), 'path': generate_path(item)} for item in directory_list if not str(item.name).startswith('.')]
-
+    data_list = [{'name': os.path.basename(item), 'thumbnail': generate_thumbnail(item), 'path': generate_path(item)} for item in directory_list if not os.path.basename(item).startswith('.')]
     directory_dict = {
         'directoryPath': directory_path,
         'count': len(data_list),
@@ -42,16 +43,16 @@ def handle(directory_path):
     return directory_dict
 
 
-def generate_path(path: Path):
-    print(f'"{path.absolute()}" is_dir: {path.is_dir()}: is_exists:{path.exists()}')
-    if path.is_dir():
-        return f'view/{quote(str(path))}'
+def generate_path(directory_path: str):
+    # print(f'"{os.path.abspath(directory_path)}" is_dir: {os.path.isdir(directory_path)}: is_exists:{os.path.exists(directory_path)}')
+    if os.path.isdir(directory_path):
+        return f'view/{quote(directory_path)}'
     else:
-        return f'img/{quote(str(path))}'
+        return f'img/{quote(directory_path)}'
 
 
 def get_directory_list(directory_path: Path):
     if directory_path.exists() and directory_path.is_dir():
-        return [path for path in sorted(directory_path.iterdir())]
+        return glob.glob(glob.escape(str(directory_path))+'/*')
     else:
         return []
