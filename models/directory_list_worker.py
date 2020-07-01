@@ -1,6 +1,6 @@
 from pathlib import Path
 from models.thumbnail_generator import generate_thumbnail
-
+from urllib.parse import quote
 
 def handle(directory_path):
     '''
@@ -32,7 +32,7 @@ def handle(directory_path):
         }
     '''
     directory_list = get_directory_list(Path(directory_path))
-    data_list = [{'name': item.name, 'path': generate_thumbnail(str(item))} for item in directory_list if not str(item.name).startswith('.')]
+    data_list = [{'name': item.name, 'thumbnail': generate_thumbnail(str(item)), 'image': f'img/{quote(str(item))}'} for item in directory_list if not str(item.name).startswith('.')]
 
     directory_dict = {
         'directoryPath': directory_path,

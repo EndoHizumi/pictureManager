@@ -32,7 +32,6 @@ def get_thumbnail(file_path):
     file = load_file(thumbnail_file_path)
     app.logger.debug(file_path)
     app.logger.debug(thumbnail_file_path)
-    
     if file is not None:
         return Response(response=file, content_type=magic.from_file(thumbnail_file_path, mime=True))
     else:

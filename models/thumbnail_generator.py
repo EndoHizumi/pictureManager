@@ -1,6 +1,7 @@
 from pathlib import Path
 from PIL import Image
 import imghdr
+from urllib.parse import quote
 
 
 def generate_thumbnail(file_path: str) -> str:
@@ -25,7 +26,7 @@ def generate_thumbnail(file_path: str) -> str:
             image.save(thumbnail_path, picture_file_type)
         elif picture_file_type is None:
             return ('/image/file_icon.png')
-        return f'thumbnail/{file_path}'
+        return f'thumbnail/{quote(file_path)}'
     else:
         return ('/image/folder_icon.png')
 
