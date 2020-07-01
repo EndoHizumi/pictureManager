@@ -27,7 +27,7 @@ def get_file(file_path):
 @app.route('/thumbnail/<path:file_path>', methods={'GET'})
 def get_thumbnail(file_path):
     file_name = os.path.basename(file_path)
-    file_parent_path = os.path.dirname(file_path)
+    file_parent_path = f"{os.path.dirname(file_path)}" or "."
     thumbnail_file_path = f'{file_parent_path}/.thumbnail/{file_name}'
     file = load_file(thumbnail_file_path)
     app.logger.debug(file_path)
