@@ -2,6 +2,6 @@ autopep8==1.5.2
 flake8==3.8.1
 Flask==1.1.2
 mypy==0.770
-pillow=7.1.2
+pillow==7.1.2
 # Dependence of python-magic to libmagic
-python-magic=0.4.18
+python-magic==0.4.18
